@@ -85,36 +85,21 @@
 (def focus_colors (+ red_focus_numbers blue_focus_numbers green_focus_numbers grey_focus_numbers))
 
 (defn getColor [orbStar]
-  (def marker (rand-int (if (= orbStar "three") three_colors
-                        (if (= orbStar "four") four_colors
-                        (if (= orbStar "five") five_colors
-                        (if (= orbStar "focus") focus_colors "bad_request")))
-                        )
-              )
+  (def group (if (= orbStar "three") (wrand [red_3_numbers blue_3_numbers green_3_numbers grey_3_numbers])
+             (if (= orbStar "four") (wrand [red_4_numbers blue_4_numbers green_4_numbers grey_4_numbers])
+             (if (= orbStar "five") (wrand [red_5_numbers blue_5_numbers green_5_numbers grey_5_numbers])
+             (if (= orbStar "focus") (wrand [red_focus_numbers blue_focus_numbers green_focus_numbers grey_focus_numbers]))))
+             )
   )
-  (println marker)
-  (if (= orbStar "three") (if (< marker red_3_numbers) "Red 3 Star"
-                          (if (< (- marker red_3_numbers) blue_3_numbers) "Blue 3 Star"
-                          (if (< (- marker red_3_numbers blue_3_numbers) green_3_numbers) "Green 3 Star"
-                          (if (< (- marker red_3_numbers blue_3_numbers green_3_numbers) grey_3_numbers) "Green 3 Star")))
-                          )
-  (if (= orbStar "four") (if (< marker red_4_numbers) "Red 4 Star"
-                          (if (< (- marker red_4_numbers) blue_4_numbers) "Blue 4 Star"
-                          (if (< (- marker red_4_numbers blue_4_numbers) green_4_numbers) "Green 4 Star"
-                          (if (< (- marker red_4_numbers blue_4_numbers green_4_numbers) grey_4_numbers) "Green 4 Star")))
-                          )
-  (if (= orbStar "five") (if (< marker red_5_numbers) "Red 5 Star"
-                          (if (< (- marker red_5_numbers) blue_5_numbers) "Blue 5 Star"
-                          (if (< (- marker red_5_numbers blue_5_numbers) green_5_numbers) "Green 5 Star"
-                          (if (< (- marker red_5_numbers blue_5_numbers green_5_numbers) grey_5_numbers) "Green 5 Star")))
-                          )
-  (if (= orbStar "focus") (if (< marker red_focus_numbers) "Red Focus 5 Star"
-                          (if (< (- marker red_focus_numbers) blue_focus_numbers) "Blue Focus 5 Star"
-                          (if (< (- marker red_focus_numbers blue_focus_numbers) green_focus_numbers) "Green Focus 5 Star"
-                          (if (< (- marker red_focus_numbers blue_focus_numbers green_focus_numbers) grey_focus_numbers) "Green Focus 5 Star")))
-                          ) "Bad Request")))
+  (def color (if (= group 0) "Red"
+             (if (= group 1) "Blue"
+             (if (= group 2) "Green"
+             (if (= group 3) "Grey")))
+             )
   )
+  (clojure.string/join " " [color orbStar "star"])
 )
+
 (println "Orb 1: " (getColor orb1star))
 (println "Orb 2: " (getColor orb2star))
 (println "Orb 3: " (getColor orb3star))
