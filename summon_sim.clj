@@ -56,39 +56,22 @@
 (def orb4star (getOrbStar))
 (def orb5star (getOrbStar))
 
-(def red_focus_numbers 0)
-(def blue_focus_numbers 0)
-(def green_focus_numbers 0)
-(def grey_focus_numbers 0)
-(def red_5_numbers 49)
-(def blue_5_numbers 35)
-(def green_5_numbers 31)
-(def grey_5_numbers 27)
-(def five_colors (+ red_5_numbers blue_5_numbers green_5_numbers grey_5_numbers))
-(def red_4_numbers 33)
-(def blue_4_numbers 32)
-(def green_4_numbers 23)
-(def grey_4_numbers 34)
-(def four_colors (+ red_4_numbers blue_4_numbers green_4_numbers grey_4_numbers))
-(def red_3_numbers 33)
-(def blue_3_numbers 30)
-(def green_3_numbers 20)
-(def grey_3_numbers 30)
-(def three_colors (+ red_3_numbers blue_3_numbers green_3_numbers grey_3_numbers))
-
-(doseq [col focus_color_wheel] (if (= col "red") (def red_focus_numbers (inc red_focus_numbers))
-                          (if (= col "blue") (def blue_focus_numbers (inc blue_focus_numbers))
-                          (if (= col "green") (def green_focus_numbers (inc green_focus_numbers))
-                          (if (= col "grey") (def grey_focus_numbers (inc grey_focus_numbers)) "Bad data")))
-                          )
+(def pool_numbers (hash-map "red" (hash-map "focus" 0 "five" 49 "four" 33 "three" 33)
+                            "blue" (hash-map "focus" 0 "five" 35 "four" 32 "three" 30)
+                            "green" (hash-map "focus" 0 "five" 31 "four" 23 "three" 20)
+                            "grey" (hash-map "focus" 0 "five" 27 "four" 34 "three" 30)
+                  )
 )
-(def focus_colors (+ red_focus_numbers blue_focus_numbers green_focus_numbers grey_focus_numbers))
+
+(doseq [col focus_color_wheel] (def pool_numbers
+                                 (assoc-in pool_numbers [col "focus"]
+                                   (inc (get (get pool_numbers col) "focus")))))
 
 (defn getColor [orbStar]
-  (def group (if (= orbStar "three") (wrand [red_3_numbers blue_3_numbers green_3_numbers grey_3_numbers])
-             (if (= orbStar "four") (wrand [red_4_numbers blue_4_numbers green_4_numbers grey_4_numbers])
-             (if (= orbStar "five") (wrand [red_5_numbers blue_5_numbers green_5_numbers grey_5_numbers])
-             (if (= orbStar "focus") (wrand [red_focus_numbers blue_focus_numbers green_focus_numbers grey_focus_numbers]))))
+  (def group (wrand [(get (get pool_numbers "red") orbStar)
+                     (get (get pool_numbers "blue") orbStar)
+                     (get (get pool_numbers "green") orbStar)
+                     (get (get pool_numbers "grey") orbStar)]
              )
   )
   (def color (if (= group 0) "Red"
