@@ -21,12 +21,6 @@
 (def focus_color_wheel (if (= focus_color_wheel "") "red red blue grey" focus_color_wheel))
 (def focus_color_wheel (str/split focus_color_wheel #" "))
 
-(def orb1 (rand-int 100))
-(def orb2 (rand-int 100))
-(def orb3 (rand-int 100))
-(def orb4 (rand-int 100))
-(def orb5 (rand-int 100))
-
 ;; Taken from https://stackoverflow.com/questions/14464011/idiomatic-clojure-for-picking-between-random-weighted-choices
 ;; Credit to Rich Hickey (solution) and dripnet (stackoverflow answer)
 (defn wrand 
