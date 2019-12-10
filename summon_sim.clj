@@ -44,12 +44,6 @@
   )
 )
 
-(def orb1star (getOrbStar))
-(def orb2star (getOrbStar))
-(def orb3star (getOrbStar))
-(def orb4star (getOrbStar))
-(def orb5star (getOrbStar))
-
 (def pool_numbers (hash-map "red" (hash-map "focus" 0 "five" 49 "four" 33 "three" 33)
                             "blue" (hash-map "focus" 0 "five" 35 "four" 32 "three" 30)
                             "green" (hash-map "focus" 0 "five" 31 "four" 23 "three" 20)
@@ -80,19 +74,12 @@
   )
 )
 
-(println "Orb 1: " (getColor orb1star) orb1star "star")
-(println "Orb 2: " (getColor orb2star) orb2star "star")
-(println "Orb 3: " (getColor orb3star) orb3star "star")
-(println "Orb 4: " (getColor orb4star) orb4star "star")
-(println "Orb 5: " (getColor orb5star) orb5star "star")
-
 (defn Summon [three_chance four_chance five_chance focus_chance]
   (def orbs (repeat 5 (hash-map "stars" (getOrbStar))))
   (def new_orbs [])
   ;;(doseq [orb orbs] (def new_orbs (conj new_orbs orb)))
   (doseq [orb orbs] (def new_orbs (conj new_orbs (assoc orb "color" (getColor (get orb "stars"))))))
-  (println orbs)
-  (println new_orbs)
+  (dotimes  [i 5] (println "Orb" i ":" (new_orbs i)))
 )
 
 (Summon threes fours fives focus)
