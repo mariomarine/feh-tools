@@ -87,7 +87,7 @@
 (println "Orb 5: " (getColor orb5star) orb5star "star")
 
 (defn Summon [three_chance four_chance five_chance focus_chance]
-  (def orbs (list (hash-map "stars" (getOrbStar)) (hash-map "stars" (getOrbStar)) (hash-map "stars" (getOrbStar)) (hash-map "stars" (getOrbStar)) (hash-map "stars" (getOrbStar))))
+  (def orbs (repeat 5 (hash-map "stars" (getOrbStar))))
   (def new_orbs [])
   ;;(doseq [orb orbs] (def new_orbs (conj new_orbs orb)))
   (doseq [orb orbs] (def new_orbs (conj new_orbs (assoc orb "color" (getColor (get orb "stars"))))))
