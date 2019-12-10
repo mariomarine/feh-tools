@@ -61,10 +61,10 @@
 
 
 (defn getColor [orbStar]
-  (def group (wrand [(get (get pool_numbers "red") orbStar)
-                     (get (get pool_numbers "blue") orbStar)
-                     (get (get pool_numbers "green") orbStar)
-                     (get (get pool_numbers "grey") orbStar)]
+  (def group (wrand [(get-in pool_numbers ["red" orbStar])
+                     (get-in pool_numbers ["blue" orbStar])
+                     (get-in pool_numbers ["green" orbStar])
+                     (get-in pool_numbers ["grey" orbStar])]
              )
   )
   (if (= group 0) "Red"
