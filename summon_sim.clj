@@ -59,7 +59,12 @@
 
 (doseq [col focus_color_wheel] (def pool_numbers
                                  (assoc-in pool_numbers [col "focus"]
-                                   (inc (get (get pool_numbers col) "focus")))))
+                                   (inc (get-in pool_numbers [col "focus"]))
+                                 )
+                               )
+)
+
+
 
 (defn getColor [orbStar]
   (def group (wrand [(get (get pool_numbers "red") orbStar)
@@ -68,18 +73,27 @@
                      (get (get pool_numbers "grey") orbStar)]
              )
   )
-  (def color (if (= group 0) "Red"
+  (if (= group 0) "Red"
              (if (= group 1) "Blue"
              (if (= group 2) "Green"
              (if (= group 3) "Grey")))
-             )
   )
-  (clojure.string/join " " [color orbStar "star"])
 )
 
-(println "Orb 1: " (getColor orb1star))
-(println "Orb 2: " (getColor orb2star))
-(println "Orb 3: " (getColor orb3star))
-(println "Orb 4: " (getColor orb4star))
-(println "Orb 5: " (getColor orb5star))
+(println "Orb 1: " (getColor orb1star) orb1star "star")
+(println "Orb 2: " (getColor orb2star) orb2star "star")
+(println "Orb 3: " (getColor orb3star) orb3star "star")
+(println "Orb 4: " (getColor orb4star) orb4star "star")
+(println "Orb 5: " (getColor orb5star) orb5star "star")
+
+(defn Summon [three_chance four_chance five_chance focus_chance]
+  (def orbs (list (hash-map "stars" (getOrbStar)) (hash-map "stars" (getOrbStar)) (hash-map "stars" (getOrbStar)) (hash-map "stars" (getOrbStar)) (hash-map "stars" (getOrbStar))))
+  (def new_orbs [])
+  ;;(doseq [orb orbs] (def new_orbs (conj new_orbs orb)))
+  (doseq [orb orbs] (def new_orbs (conj new_orbs (assoc orb "color" (getColor (get orb "stars"))))))
+  (println orbs)
+  (println new_orbs)
+)
+
+(Summon threes fours fives focus)
 
