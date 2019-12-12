@@ -1,21 +1,23 @@
 (require '[clojure.string :as str])
-(println "3 Star Chance (%): ")
-(def threes (read-line))
-(def threes (if (= threes "") "36" threes))
-(def threes (Integer. threes))
-(println "4 Star Chance (%): ")
-(def fours (read-line))
-(def fours (if (= fours "") "58" fours))
-(def fours (Integer. fours))
-(println "5 Star Chance (%): ")
-(def fives (read-line))
-(def fives (if (= fives "") "3" fives))
-(def fives (Integer. fives))
-(println "5 Star-Focus Chance (%): ")
-(def focus (read-line))
-(def focus (if (= focus "") "3" focus))
-(def focus (Integer. focus))
-
+(defn getChance []
+  (println "3 Star Chance (%): ")
+  (def threes (read-line))
+  (def threes (if (= threes "") "36" threes))
+  (def threes (Integer. threes))
+  (println "4 Star Chance (%): ")
+  (def fours (read-line))
+  (def fours (if (= fours "") "58" fours))
+  (def fours (Integer. fours))
+  (println "5 Star Chance (%): ")
+  (def fives (read-line))
+  (def fives (if (= fives "") "3" fives))
+  (def fives (Integer. fives))
+  (println "5 Star-Focus Chance (%): ")
+  (def focus (read-line))
+  (def focus (if (= focus "") "3" focus))
+  (def focus (Integer. focus))
+  (list threes fours fives focus)
+)
 (println "Focus colors (red red blue grey): ")
 (def focus_color_wheel (read-line))
 (def focus_color_wheel (if (= focus_color_wheel "") "red red blue grey" focus_color_wheel))
@@ -35,8 +37,8 @@
         i
         (recur (inc i) (+ (slices i) sum))))))
 
-(defn getOrbStar [] 
-  (def pick (wrand [threes fours fives focus]))
+(defn getOrbStar [threes_chance fours_chance fives_chance focuses_chance] 
+  (def pick (wrand [threes_chance fours_chance fives_chance focuses_chance]))
   (if (= pick 0) "three"
   (if (= pick 1) "four"
   (if (= pick 2) "five"
@@ -76,11 +78,11 @@
 
 (defn Summon [three_chance four_chance five_chance focus_chance]
   (def orbs [])
-  (dotimes [i 5] (def orbs (conj orbs (hash-map "stars" (getOrbStar)))))
+  (dotimes [i 5] (def orbs (conj orbs (hash-map "stars" (getOrbStar three_chance four_chance five_chance focus_chance)))))
   (def new_orbs [])
   (doseq [orb orbs] (def new_orbs (conj new_orbs (assoc orb "color" (getColor (get orb "stars"))))))
   (dotimes  [i 5] (println "Orb" i ":" (new_orbs i)))
 )
 
-(Summon threes fours fives focus)
+(apply Summon (getChance))
 
