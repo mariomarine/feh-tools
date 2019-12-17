@@ -97,8 +97,8 @@
 
 (println "Orbs Spent:" (get-orbs-spent snipes))
 
+(defn get-sniped-fives [stars] (count (for [orb snipes :when (= (get orb "stars") stars)] 1)))
 
-
-(def getFive (> (+ (count (for [orb snipes :when (= (get orb "stars") "focus")] 1)) (count (for [orb snipes :when (= (get orb "stars") "five")] 1))) 0))
+(def getFive (> (+ (get-sniped-fives "focus") (get-sniped-fives "five")) 0))
 
 (println getFive)
