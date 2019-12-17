@@ -82,5 +82,23 @@
   (for [orb orbs] (assoc orb "color" (getColor (get orb "stars"))))
 )
 
-(println (apply Summon (getChance)))
+;; Get Initial Chance
+;; Determine strategy (snipe or bulk) (start with Snipe, ask for color)
+;; Call Summom, open orbs of chosen color
+;; Track Rate Increase Threshold (when 5 orbs have been opened without a 5* unit, increase chances of getting a 5* by .5% (watch for 120 times raises chances to 100%)
+;; 
+(def session (apply Summon (getChance)))
 
+(println session)
+
+(def snipes (for [orb session :when (= (get orb "color") "Green")] orb))
+
+(defn get-orbs-spent [finalsession] (case (count finalsession) 0 0 1 5 2 9 3 13 4 17 5 20))
+
+(println "Orbs Spent:" (get-orbs-spent snipes))
+
+
+
+(def getFive (> (+ (count (for [orb snipes :when (= (get orb "stars") "focus")] 1)) (count (for [orb snipes :when (= (get orb "stars") "five")] 1))) 0))
+
+(println getFive)
