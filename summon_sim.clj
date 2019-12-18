@@ -18,9 +18,9 @@
   (def focus (Integer. focus))
   (list threes fours fives focus)
 )
-(println "Focus colors (red red blue grey): ")
+(println "Focus colors (green red blue grey): ")
 (def focus_color_wheel (read-line))
-(def focus_color_wheel (if (= focus_color_wheel "") "red red blue grey" focus_color_wheel))
+(def focus_color_wheel (if (= focus_color_wheel "") "green red blue grey" focus_color_wheel))
 (def focus_color_wheel (str/split focus_color_wheel #" "))
 
 ;; Taken from https://stackoverflow.com/questions/14464011/idiomatic-clojure-for-picking-between-random-weighted-choices
@@ -120,9 +120,8 @@
       (println "summedNoFives" summedNoFives)
       (println "numFocusSummed" numFocusSummed)
       (snipes-2 (+ orbsSpent (get-orbs-spent session))
-                (+ summedNoFives (count (snipes session))) ;; FIXME
-                ;; (+ numFocusSummed (get-sniped-fives "focus" (snipes session)))
-                (+ numFocusSummed 1)
+                (+ summedNoFives (count (snipes session)))
+                (+ numFocusSummed (get-sniped-fives "focus" (snipes session)))
       )
     )
   )
