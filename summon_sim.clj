@@ -86,19 +86,48 @@
 ;; Determine strategy (snipe or bulk) (start with Snipe, ask for color)
 ;; Call Summom, open orbs of chosen color
 ;; Track Rate Increase Threshold (when 5 orbs have been opened without a 5* unit, increase chances of getting a 5* by .5% (watch for 120 times raises chances to 100%)
-;; 
-(def session (apply Summon (getChance)))
 
-(println session)
+;; (def session (apply Summon (getChance)))
 
-(def snipes (for [orb session :when (= (get orb "color") "Green")] orb))
+;; (println session)
+
+(defn snipes [session] (for [orb session :when (= (get orb "color") "Green")] orb))
 
 (defn get-orbs-spent [finalsession] (case (count finalsession) 0 0 1 5 2 9 3 13 4 17 5 20))
 
-(println "Orbs Spent:" (get-orbs-spent snipes))
+(defn get-sniped-fives [stars, snipes] (count (for [orb snipes :when (= (get orb "stars") stars)] 1)))
 
-(defn get-sniped-fives [stars] (count (for [orb snipes :when (= (get orb "stars") stars)] 1)))
+(def chances (getChance))
 
-(def getFive (> (+ (get-sniped-fives "focus") (get-sniped-fives "five")) 0))
+(defn snipes-2 [orbsSpent summedNoFives numFocusSummed] 
+  ;; values to track: #focus summed, chance of fives, #summed-no-fives
+  ;; if #focus-summed >= 11 stop and print stats, otherwise pass in #focus summed
+  ;; if #summed-no-fives >= 5, increase chance-of-fives by 0.5%
+  ;; else pass in #summed-no-fives plus count-new-snipes
+  (if (> numFocusSummed 10)
+    ;; then
+    (println "we did it," "Number Orbs Spent:" orbsSpent)
+    ;; else
+    (
+      (if (< summedNoFives 5)
+        ;; then
+        (def session (apply Summon chances))
+        ;; else
+        (def session (apply Summon chances)) ;; Plus 0.5%
+      )
+      (println "session" session)
+      (println "orbsSpent" orbsSpent)
+      (println "summedNoFives" summedNoFives)
+      (println "numFocusSummed" numFocusSummed)
+      (snipes-2 (+ orbsSpent (get-orbs-spent session))
+                (+ summedNoFives (count (snipes session))) ;; FIXME
+                ;; (+ numFocusSummed (get-sniped-fives "focus" (snipes session)))
+                (+ numFocusSummed 1)
+      )
+    )
+  )
+)
 
-(println getFive)
+
+(snipes-2 0 0 0)
+
