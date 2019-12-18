@@ -18,9 +18,7 @@
   (def focus (Integer. focus))
   (list threes fours fives focus)
 )
-(println "Focus colors (green red blue grey): ")
-(def focus_color_wheel (read-line))
-(def focus_color_wheel (if (= focus_color_wheel "") "green red blue grey" focus_color_wheel))
+(def focus_color_wheel "green red blue grey")
 (def focus_color_wheel (str/split focus_color_wheel #" "))
 
 ;; Taken from https://stackoverflow.com/questions/14464011/idiomatic-clojure-for-picking-between-random-weighted-choices
@@ -106,7 +104,7 @@
   ;; else pass in #summed-no-fives plus count-new-snipes
   (if (> numFocusSummed 10)
     ;; then
-    (println "we did it," "Number Orbs Spent:" orbsSpent)
+    (do orbsSpent)
     ;; else
     (do
       (if (< summedNoFives 5)
@@ -115,10 +113,6 @@
         ;; else
         (def session (Summon (- (chances :three) 0.25) (- (chances :four) 0.25) (+ (chances :five) 0.25) (+ (chances :focus) 0.25))) ;; Plus 0.5%
       )
-      (println "session" session)
-      (println "orbsSpent" orbsSpent)
-      (println "summedNoFives" summedNoFives)
-      (println "numFocusSummed" numFocusSummed)
       (if (<
             (+ (get-sniped-fives "five" (snipes session)) (get-sniped-fives "focus" (snipes session)) summedNoFives)
             5
@@ -139,5 +133,5 @@
 )
 
 
-(snipes-2 0 0 0 base-chances)
+(println (take 5 (repeatedly #(snipes-2 0 0 0 base-chances))))
 
