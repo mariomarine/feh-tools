@@ -97,9 +97,9 @@
 
 (defn get-sniped-fives [stars, snipes] (count (for [orb snipes :when (= (get orb "stars") stars)] 1)))
 
-(def chances (getChance))
+(def base-chances (hash-map :three 36 :four 58 :five 3 :focus 3))
 
-(defn snipes-2 [orbsSpent summedNoFives numFocusSummed] 
+(defn snipes-2 [orbsSpent summedNoFives numFocusSummed chances] 
   ;; values to track: #focus summed, chance of fives, #summed-no-fives
   ;; if #focus-summed >= 11 stop and print stats, otherwise pass in #focus summed
   ;; if #summed-no-fives >= 5, increase chance-of-fives by 0.5%
@@ -111,28 +111,33 @@
     (
       (if (< summedNoFives 5)
         ;; then
-        (def session (apply Summon chances))
+        (def session (Summon (chances :three) (chances :four) (chances :five) (chances :focus)))
         ;; else
-        (def session (apply Summon chances)) ;; Plus 0.5%
+        (def session (Summon (- (chances :three) 0.25) (- (chances :four) 0.25) (+ (chances :five) 0.25) (+ (chances :focus) 0.25))) ;; Plus 0.5%
       )
       (println "session" session)
       (println "orbsSpent" orbsSpent)
       (println "summedNoFives" summedNoFives)
       (println "numFocusSummed" numFocusSummed)
-      (snipes-2 (+ orbsSpent (get-orbs-spent (snipes session)))
-                (if (<
-                      (+ (get-sniped-fives "five" (snipes session)) (get-sniped-fives "focus" (snipes session)) summedNoFives)
-                      5
-                    )
+      (if (<
+            (+ (get-sniped-fives "five" (snipes session)) (get-sniped-fives "focus" (snipes session)) summedNoFives)
+            5
+          )
+        (snipes-2 (+ orbsSpent (get-orbs-spent (snipes session)))
                   (+ summedNoFives (count (snipes session)))
-                  0
+                  (+ numFocusSummed (get-sniped-fives "focus" (snipes session)))
+                  (update-in (update-in (update-in (update-in chances [:three] - 0.25) [:four] - 0.25) [:five] + 0.25) [:focus] + 0.25)
                 )
-                (+ numFocusSummed (get-sniped-fives "focus" (snipes session)))
+        (snipes-2 (+ orbsSpent (get-orbs-spent (snipes session)))
+                  0
+                  (+ numFocusSummed (get-sniped-fives "focus" (snipes session)))
+                  base-chances
+        )
       )
     )
   )
 )
 
 
-(snipes-2 0 0 0)
+(snipes-2 0 0 0 base-chances)
 
