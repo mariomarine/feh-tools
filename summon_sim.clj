@@ -120,7 +120,13 @@
       (println "summedNoFives" summedNoFives)
       (println "numFocusSummed" numFocusSummed)
       (snipes-2 (+ orbsSpent (get-orbs-spent session))
-                (+ summedNoFives (count (snipes session)))
+                (if (<
+                      (+ (get-sniped-fives "five" (snipes session)) (get-sniped-fives "focus" (snipes session)) summedNoFives)
+                      5
+                    )
+                  (+ summedNoFives (count (snipes session)))
+                  0
+                )
                 (+ numFocusSummed (get-sniped-fives "focus" (snipes session)))
       )
     )
