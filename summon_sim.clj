@@ -132,6 +132,10 @@
   )
 )
 
-
-(println (take 5 (repeatedly #(snipes-2 0 0 0 base-chances))))
+(defn print-average! [data] (println "Average:" (float (/ (apply + data) (count data)))))
+(defn print-min-max! [data] (println "Minimum" (first (sort data)))(println "Maximum" (last (sort data))))
+(let [data (take 1000 (repeatedly #(snipes-2 0 0 0 base-chances)))]
+  (print-average! data)
+  (print-min-max! data)
+)
 
