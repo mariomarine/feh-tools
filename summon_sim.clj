@@ -108,7 +108,7 @@
     ;; then
     (println "we did it," "Number Orbs Spent:" orbsSpent)
     ;; else
-    (
+    (do
       (if (< summedNoFives 5)
         ;; then
         (def session (Summon (chances :three) (chances :four) (chances :five) (chances :focus)))
