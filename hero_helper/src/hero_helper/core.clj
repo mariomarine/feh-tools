@@ -4,8 +4,10 @@
 
 (def ADDRESS "https://feheroes.gamepedia.com/Roy:_Brave_Lion")
 
+(defn jsoup-connect [] (.get (Jsoup/connect ADDRESS)))
+
 (defn get-address-passives []
-  (rest (map #(.text (.child % 1)) (.select (.child (.nextElementSibling (.parent (.first (.select (.select (.get (Jsoup/connect ADDRESS)) ".mw-parser-output") "#Passives")))) 0) "tr")))
+  (rest (map #(.text (.child % 1)) (.select (.child (.nextElementSibling (.parent (.first (.select (.select (jsoup-connect) ".mw-parser-output") "#Passives")))) 0) "tr")))
 )
 
 (defn -main
