@@ -8,8 +8,10 @@
 
 (defn get-table [] (.select (.child (.nextElementSibling (.parent (.first (.select (.select (jsoup-connect) ".mw-parser-output") "#Passives")))) 0) "tr"))
 
+(defn get-column [row-data] (.text (.child row-data 1)))
+
 (defn get-address-passives []
-  (rest (map #(.text (.child % 1)) (get-table)))
+  (rest (map get-column (get-table)))
 )
 
 (defn -main
