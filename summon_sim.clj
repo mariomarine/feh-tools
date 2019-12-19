@@ -21,6 +21,8 @@
 (def focus_color_wheel "green red blue grey")
 (def focus_color_wheel (str/split focus_color_wheel #" "))
 
+(def BASE_CHANCES (hash-map :three 36 :four 58 :five 3 :focus 3))
+
 ;; Taken from https://stackoverflow.com/questions/14464011/idiomatic-clojure-for-picking-between-random-weighted-choices
 ;; Credit to Rich Hickey (solution) and dripnet (stackoverflow answer)
 (defn wrand 
@@ -95,8 +97,6 @@
 
 (defn get-sniped-fives [stars, snipes] (count (for [orb snipes :when (= (get orb "stars") stars)] 1)))
 
-(def base-chances (hash-map :three 36 :four 58 :five 3 :focus 3))
-
 (defn snipes-2 [orbsSpent summedNoFives numFocusSummed chances] 
   ;; values to track: #focus summed, chance of fives, #summed-no-fives
   ;; if #focus-summed >= 11 stop and print stats, otherwise pass in #focus summed
@@ -125,7 +125,7 @@
         (snipes-2 (+ orbsSpent (get-orbs-spent (snipes session)))
                   0
                   (+ numFocusSummed (get-sniped-fives "focus" (snipes session)))
-                  base-chances
+                  BASE_CHANCES
         )
       )
     )
@@ -134,7 +134,7 @@
 
 (defn print-average! [data] (println "Average:" (float (/ (apply + data) (count data)))))
 (defn print-min-max! [data] (println "Minimum" (first (sort data)))(println "Maximum" (last (sort data))))
-(let [data (take 1000 (repeatedly #(snipes-2 0 0 0 base-chances)))]
+(let [data (take 50 (repeatedly #(snipes-2 0 0 0 BASE_CHANCES)))]
   (print-average! data)
   (print-min-max! data)
 )
