@@ -1,0 +1,77 @@
+[
+{
+    "name": "Abel",
+    "title": "The Panther",
+    "artist": "Sasashima Suisei (笹島彗星)",
+    "voice": "Mick Wingert",
+    "releaseDate": "Feb 02, 2017",
+    "colorType": "Blue",
+    "weaponType": "Lance",
+    "moveType": "Cavalry",
+    "rarity3": ["pool2"],
+    "rarity4": ["pool1", "pool2"],
+    "rarity5": ["pool1"],
+    "assets": {
+      "portrait": "img/heroes-portrait/75px-Icon_Portrait_Abel.png",
+      "main": "img/heroes-main/Abel.png"
+    },
+    "skills": [
+      { "name": "Iron Lance", "rarity": 4 },
+      { "name": "Steel Lance", "rarity": 4 },
+      { "name": "Brave Lance", "rarity": 4 },
+      { "name": "Brave Lance+", "rarity": 5 },
+      { "name": "Holy Vestments", "rarity": 4 },
+      { "name": "Aegis", "rarity": 4 },
+      { "name": "HP +3", "rarity": 4 },
+      { "name": "HP +4", "rarity": 4 },
+      { "name": "HP +5", "rarity": 5 },
+      { "name": "Swordbreaker 1", "rarity": 4 },
+      { "name": "Swordbreaker 2", "rarity": 4 },
+      { "name": "Swordbreaker 3", "rarity": 4 }
+    ],
+    "stats": {
+      "level1": { "hp": 17, "atk": 7, "spd": 8, "def": 8, "res": 6 },
+      "level40": { "hp": [ 35, 39, 42 ], "atk": [ 30, 33, 36 ], "spd": [ 29, 32, 35 ], "def": [ 22, 25, 28 ], "res": [ 22, 25, 29 ] },
+      "level1_4": { "hp": 16, "atk": 6, "spd": 8, "def": 8, "res": 5 },
+      "level40_4": { "hp": [ 33, 36, 39 ], "atk": [ 27, 30, 33 ], "spd": [ 27, 30, 33 ], "def": [ 21, 24, 27 ], "res": [ 20, 23, 26 ] }
+    }
+  },
+{
+    "name": "Alfonse",
+    "title": "Prince of Askr",
+    "artist": "Kozaki Yusuke (コザキユースケ)",
+    "voice": "Ray Chase",
+    "releaseDate": "Feb 02, 2017",
+    "colorType": "Red",
+    "weaponType": "Sword",
+    "moveType": "Infantry",
+    "rarity2": ["pool1", "pool2"],
+    "rarity3": ["pool1", "pool2"],
+    "rarity4": ["pool1", "pool2"],
+    "limited": true,
+    "assets": {
+      "portrait": "img/heroes-portrait/75px-Icon_Portrait_Alfonse.png",
+      "main": "img/heroes-main/Alfonse.png"
+    },
+    "skills": [
+      {  "name": "Iron Sword", "rarity": 2 },
+      {  "name": "Steel Sword", "rarity": 2 },
+      {  "name": "Silver Sword", "rarity": 3 },
+      {  "name": "Fólkvangr", "rarity": 5 },
+      {  "name": "Daylight", "rarity": 2 },
+      {  "name": "Sol", "rarity": 4 },
+      {  "name": "Death Blow 1", "rarity": 2 },
+      {  "name": "Death Blow 2", "rarity": 2 },
+      {  "name": "Death Blow 3", "rarity": 4 },
+      {  "name": "Spur Atk 1", "rarity": 3 },
+      {  "name": "Spur Atk 2", "rarity": 4 },
+      {  "name": "Spur Atk 3", "rarity": 5 }
+    ],
+    "stats": {
+      "level1": { "hp": 19, "atk": 9, "spd": 6, "def": 8, "res": 5 },
+      "level40": { "hp": [ 40, 43, 46 ], "atk": [ 32, 35, 38 ], "spd": [ 22, 25, 29 ], "def": [ 29, 32, 35 ], "res": [ 19, 22, 25 ] },
+      "level1_4": { "hp": 18, "atk": 9, "spd": 5, "def": 8, "res": 4 },
+      "level40_4": { "hp": [ 37, 40, 43 ], "atk": [ 30, 33, 36 ], "spd": [ 20, 23, 26 ], "def": [ 27, 30, 33 ], "res": [ 17, 20, 23 ] }
+    }
+  }
+]

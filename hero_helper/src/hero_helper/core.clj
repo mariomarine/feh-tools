@@ -1,22 +1,20 @@
 (ns hero-helper.core
-  (:gen-class)
-  (:import [org.jsoup Jsoup]))
+  (:gen-class) (:require [clojure.data.json :as json]))
 
-(def ADDRESS "https://feheroes.gamepedia.com/Roy:_Brave_Lion")
+(defn transformSkills [skill]
+  {:name (skill "name")
+   :rarity (skill "rarity")}
+)
 
-(defn jsoup-connect [] (.get (Jsoup/connect ADDRESS)))
-
-(defn get-table [] (.select (.child (.nextElementSibling (.parent (.first (.select (.select (jsoup-connect) ".mw-parser-output") "#Passives")))) 0) "tr"))
-
-(defn get-column [row-data] (.text (.child row-data 1)))
-
-(defn get-address-passives []
-  (rest (map get-column (get-table)))
+(defn transformData [entry]
+  {:name (entry "name")
+   :skills (map transformSkills (entry "skills"))}
 )
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println (get-address-passives))
+  (def data (json/read-str (slurp "new-hero-data.json")))
+  (def newData (map transformData data))
+  (println newData)
 )
-
