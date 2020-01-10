@@ -21,7 +21,7 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (def data (json/read-str (slurp "new-hero-data.json")))
+  (def data (json/read-str (slurp "hero-data.json")))
   (def newData (map transformData data))
   (println newData)
 )
