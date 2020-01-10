@@ -14,7 +14,8 @@
   {:name (entry "name")
    :title (entry "title")
    :skills (map transformSkills (entry "skills"))
-   :rarities (getRarity entry)}
+   :rarities (getRarity entry)
+   :exclusive (contains? entry "limited")}
 )
 
 (defn -main
