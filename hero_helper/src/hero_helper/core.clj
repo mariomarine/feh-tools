@@ -6,9 +6,15 @@
    :rarity (skill "rarity")}
 )
 
+(defn getRarity [row]
+  (map #(Integer. (re-find #"\d" %)) (keys (select-keys row ["rarity1", "rarity2", "rarity3", "rarity4",  "rarity5"])))
+)
+
 (defn transformData [entry]
   {:name (entry "name")
-   :skills (map transformSkills (entry "skills"))}
+   :title (entry "title")
+   :skills (map transformSkills (entry "skills"))
+   :rarities (getRarity entry)}
 )
 
 (defn -main
