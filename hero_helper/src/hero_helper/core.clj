@@ -1,5 +1,8 @@
 (ns hero-helper.core
-  (:gen-class) (:require [clojure.data.json :as json]))
+  (:gen-class)
+  (:require [clojure.data.json :as json])
+)
+(require '[clojure.string :as string])
 
 (defn transformSkills [skill]
   {:name (skill "name")
@@ -30,10 +33,18 @@
   (filter #(hasSkill % skillName) dataSet)
 )
 
+(defn printableHero [hero]
+  (str (hero :name) ", " (hero :title) "\n"
+       "Rarities: " (hero :rarities) "\t" "Exclusive: " (hero :exclusive) "\n"
+       "Skills: " (string/join ", " (into [] (map #(str (get % :name) " (" (get % :rarity) "*)" ) (get hero :skills)))) "\n"
+       "\n"
+  )
+)
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (def data (json/read-str (slurp "hero-data.json")))
   (def newData (into [] (map transformData data)))
-  (println newData)
+  (println (map #(printableHero %) newData))
 )
