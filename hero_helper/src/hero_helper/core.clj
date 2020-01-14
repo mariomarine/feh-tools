@@ -46,5 +46,8 @@
   [& args]
   (def data (json/read-str (slurp "hero-data.json")))
   (def newData (into [] (map transformData data)))
-  (println (map #(printableHero %) newData))
+  (def skillToSearch "Distant Counter")
+  (println (str "Searching for: " skillToSearch))
+  (println)
+  (println (string/join (map #(printableHero %) (searchForSkill skillToSearch newData))))
 )
