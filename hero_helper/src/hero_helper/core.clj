@@ -18,6 +18,18 @@
    :exclusive (contains? entry "limited")}
 )
 
+(defn hasSkill
+  "Takes a hero and a skill name, and returns true/false whether that hero has that skill"
+  [hero, skillName]
+  (.contains (into [] (map #(get % :name) (get hero :skills))) skillName)
+)
+
+(defn searchForSkill
+  "Takes a skill name and a seq of heroes, and returns those heroes who have the skill"
+  [skillName, dataSet]
+  (filter #(hasSkill % skillName) dataSet)
+)
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
