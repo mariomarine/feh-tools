@@ -1,0 +1,26 @@
+Given:
+- Color(s) to snipe (Default to green)
+- Chances for 5/Focus (Default to 3%, 3%)
+- Number of units desired (Default is 11)
+
+
+Produce:
+- Histogram of results
+- Average orbs spent
+- Most likely result (aka, highest bucket on histogram)
+- Min Spent
+- Max Spent
+- Number of non-snipe-non-focus 5* units summoned
+- Number of non-snipe-non-focus units summoned
+
+
+Pseudocode:
+While sniped unit count < desired unit count:
+  Create summoning session, noting desired colors vs non-desired colors
+  if any desired colors exist: Summon all desired colors
+  else: summon 1
+  check sniped unit count - desired unit count
+  If any unit summoned = 5*, reset pity_number to 0
+  Each increment of 5 increases base chances of 5*/focus by .5% total (aka, 3%/3% -> 3.25%/3.25%), up to a max of pity_number = 120, then 5* chance = 100%
+  Start from beginning
+
